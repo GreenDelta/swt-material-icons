@@ -1,3 +1,5 @@
+import os
+import shutil
 import zipfile
 from PIL import Image
 
@@ -6,8 +8,12 @@ ICON_ZIP = "./raw/material-design-icons-master.zip"
 
 
 def main():
-    with zipfile.ZipFile(ICON_ZIP, 'r') as z:
+    if os.path.exists(TARGET_DIR):
+        shutil.rmtree(TARGET_DIR)
+    os.makedirs(TARGET_DIR)
 
+    print('read zip file ...')
+    with zipfile.ZipFile(ICON_ZIP, 'r') as z:
 
         paths = []
         for n in z.namelist():
@@ -23,7 +29,8 @@ def main():
                 image.save(target_path(path))
             count += 1
             if count % 100 == 0:
-                break
+                print(f'  .. converted {count} images ..')
+        print('all done')
 
 
 def matches(file_name: str) -> bool:
@@ -40,17 +47,11 @@ def matches(file_name: str) -> bool:
 
 
 def target_path(file_name: str) -> str:
-    base = file_name.split('/')[-1].removesuffix('_black_18dp.png')
+    base = file_name.split('/')[-1]\
+        .removesuffix('_black_18dp.png')\
+        .removeprefix('baseline_')
     return f'{TARGET_DIR}/{base}.png'
 
-
-""""
-img_dir = './src/main/resources/org/openlca/swt/material/icons'
-img = Image.open(img_dir + '/lock.png')
-img.resize((14, 14), Image.ANTIALIAS, box=(16, 16, 16, 16))
-img.alpha_composite
-img.save(img_dir + '/lock_16.png')
-"""
 
 if __name__ == '__main__':
     main()
