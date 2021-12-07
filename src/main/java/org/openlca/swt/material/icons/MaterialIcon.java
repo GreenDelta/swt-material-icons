@@ -1,10 +1,13 @@
 package org.openlca.swt.material.icons;
 
 import java.io.IOException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
 public enum MaterialIcon {
@@ -2038,6 +2041,8 @@ public enum MaterialIcon {
 
   private final String file;
 
+  private static final ConcurrentMap<String, ImageData> cache = new ConcurrentHashMap<>();
+
   MaterialIcon(String file) {
     this.file = file;
   }
@@ -2046,15 +2051,48 @@ public enum MaterialIcon {
     return new Image(display, data());
   }
 
+  Image image(Display display, RGB rgb) {
+    return new Image(display, data(rgb));
+  }
+
   ImageData data() {
+    var cached = cache.get(file);
+    if (cached != null)
+      return cached;
     try (var stream = MaterialIcon.class.getResourceAsStream(file)) {
       var data = new ImageLoader().load(stream);
-      return data.length == 0
+      var imageData = data.length == 0
         ? null
         : data[0];
+      if (imageData != null) {
+        cache.put(file, imageData);
+      }
+      return imageData;
     } catch (IOException e) {
       throw new RuntimeException("failed to load image data of " + this, e);
     }
+  }
+
+  ImageData data(RGB color) {
+    var key = file + "_" + color.red + "_" + color.green + "_" + color.blue;
+    var cached = cache.get(key);
+    if (cached != null)
+      return cached;
+    var raw = data();
+    if (raw == null)
+      return null;
+    var data = (ImageData) raw.clone();
+    for (int x = 0; x < data.width; x++) {
+      for (int y = 0; y < data.height; y++) {
+        data.setPixel(x, y, (color.red << 16) | (color.green << 8) | (color.blue));
+      }
+    }
+    cache.put(key, data);
+    return data;
+  }
+
+  static void clearCache() {
+    cache.clear();
   }
 
 }
