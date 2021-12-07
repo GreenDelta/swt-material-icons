@@ -7,15 +7,27 @@ ICON_ZIP = "./raw/material-design-icons-master.zip"
 
 def main():
     with zipfile.ZipFile(ICON_ZIP, 'r') as z:
-        count = 0
+
+
+        paths = []
         for n in z.namelist():
             if matches(n):
-                count += 1
-        print(f'{count} images')
+                paths.append(n)
+
+        print(f'convert {len(paths)} images ...')
+        count = 0
+        for path in paths:
+            with z.open(path) as data:
+                image = Image.open(data)
+                image.resize((16, 16), Image.ANTIALIAS)
+                image.save(target_path(path))
+            count += 1
+            if count % 100 == 0:
+                break
 
 
 def matches(file_name: str) -> bool:
-    if not file_name.endswith('.png'):
+    if not file_name.endswith('_black_18dp.png'):
         return False
     path_args = [
         '/png/',
@@ -25,6 +37,11 @@ def matches(file_name: str) -> bool:
         if not arg in file_name:
             return False
     return True
+
+
+def target_path(file_name: str) -> str:
+    base = file_name.split('/')[-1].removesuffix('_black_18dp.png')
+    return f'{TARGET_DIR}/{base}.png'
 
 
 """"
