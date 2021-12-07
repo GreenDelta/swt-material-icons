@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Display;
 
 public enum MaterialIcon {
 
-  LOCK("lock.png");
+  LOCK("lock_16.png");
 
   private final String file;
 
