@@ -2047,15 +2047,15 @@ public enum MaterialIcon {
     this.file = file;
   }
 
-  Image image(Display display) {
+  public Image image(Display display) {
     return new Image(display, data());
   }
 
-  Image image(Display display, RGB rgb) {
+  public Image image(Display display, RGB rgb) {
     return new Image(display, data(rgb));
   }
 
-  ImageData data() {
+  public ImageData data() {
     var cached = cache.get(file);
     if (cached != null)
       return cached;
