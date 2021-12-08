@@ -36,9 +36,12 @@ def main():
 def matches(file_name: str) -> bool:
     if not file_name.endswith('_black_18dp.png'):
         return False
+    if 'twotone_' in file_name:
+        return False
     path_args = [
         '/png/',
-        '/materialiconsoutlined/18dp/1x/'
+        '/materialicons',
+        '/18dp/1x/'
     ]
     for arg in path_args:
         if not arg in file_name:
@@ -48,9 +51,7 @@ def matches(file_name: str) -> bool:
 
 def target_path(file_name: str) -> str:
     base = file_name.split('/')[-1]\
-        .removesuffix('_black_18dp.png')\
-        .removeprefix('baseline_')\
-        .removeprefix('outline_')
+        .removesuffix('_black_18dp.png')
     return f'{TARGET_DIR}/{base}.png'
 
 

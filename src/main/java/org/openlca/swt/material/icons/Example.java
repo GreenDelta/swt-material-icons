@@ -1,5 +1,7 @@
 package org.openlca.swt.material.icons;
 
+import java.util.function.Function;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FillLayout;
@@ -27,8 +29,9 @@ public class Example {
         : SWT.COLOR_BLACK));
     com.setLayout(new GridLayout(60, true));
 
+    Function<MaterialIcon, IconDescriptor> variant = MaterialIcon::outline;
     for (var icon : MaterialIcon.values()) {
-      var img = icon.image(display, darkMode
+      var img = variant.apply(icon).image(display, darkMode
       ? new RGB(114, 252, 178)
       : new RGB(0, 121, 107));
       var label = new Label(com, SWT.NONE);
