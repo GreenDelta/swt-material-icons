@@ -9,7 +9,7 @@ package org.openlca.swt.material.icons;
 public enum MaterialIcon {
 
   // region generated
-  $$$$
+$$$$
   // endregion
 
   private final String name;
@@ -83,7 +83,7 @@ def main():
             item = f'NUMBER_{item}'
         if i > 0:
             item_block = item_block + ",\n"
-        item_block + f'  {item}("{icon}")'
+        item_block = item_block + f'  {item}("{icon}")'
     item_block = item_block + ";\n"
 
     text = TEMPLATE.replace('$$$$', item_block)

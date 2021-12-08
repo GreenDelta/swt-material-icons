@@ -15,30 +15,29 @@ public class Example {
 
   public static void main(String[] args) {
 
-    boolean darkMode = true;
+    boolean darkMode = false;
 
     var display = new Display();
     var shell = new Shell();
     shell.setSize(60 * 16, 500);
     shell.setLayout(new FillLayout());
 
+    var background =  darkMode
+      ? display.getSystemColor(SWT.COLOR_BLACK)
+      : display.getSystemColor(SWT.COLOR_WHITE);
+    var foreground = darkMode
+      ? new RGB(114, 252, 178)
+      : new RGB(0, 121, 107);
+
     var com = new Composite(shell, SWT.NONE);
-    com.setBackground(display.getSystemColor(
-      darkMode
-        ? SWT.COLOR_WHITE
-        : SWT.COLOR_BLACK));
+    com.setBackground(background);
     com.setLayout(new GridLayout(60, true));
 
-    Function<MaterialIcon, IconDescriptor> variant = MaterialIcon::outline;
+    Function<MaterialIcon, IconDescriptor> variant = MaterialIcon::sharp;
     for (var icon : MaterialIcon.values()) {
-      var img = variant.apply(icon).image(display, darkMode
-      ? new RGB(114, 252, 178)
-      : new RGB(0, 121, 107));
+      var img = variant.apply(icon).image(display, foreground);
       var label = new Label(com, SWT.NONE);
-      label.setBackground(display.getSystemColor(
-        darkMode
-        ? SWT.COLOR_BLACK
-        : SWT.COLOR_WHITE));
+      label.setBackground(background);
       label.setImage(img);
       label.setToolTipText(icon.name());
     }
