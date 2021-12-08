@@ -33,8 +33,8 @@ public class Example {
     com.setBackground(background);
     com.setLayout(new GridLayout(60, true));
 
-    Function<MaterialIcon, IconDescriptor> variant = MaterialIcon::outline;
-    for (var icon : MaterialIcon.values()) {
+    Function<MaterialIcons, MaterialIcon> variant = MaterialIcons::outline;
+    for (var icon : MaterialIcons.values()) {
       var img = variant.apply(icon).image(display, foreground);
       var label = new Label(com, SWT.NONE);
       label.setBackground(background);

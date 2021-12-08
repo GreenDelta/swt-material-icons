@@ -1,12 +1,12 @@
 import os
 
 ICON_DIR = './src/main/resources/org/openlca/swt/material/icons'
-ENUM_FILE = './src/main/java/org/openlca/swt/material/icons/MaterialIcon.java'
+ENUM_FILE = './src/main/java/org/openlca/swt/material/icons/MaterialIcons.java'
 
 TEMPLATE = """
 package org.openlca.swt.material.icons;
 
-public enum MaterialIcon {
+public enum MaterialIcons {
 
   // region generated
 $$$$
@@ -14,24 +14,24 @@ $$$$
 
   private final String name;
 
-  MaterialIcon(String name) {
+  MaterialIcons(String name) {
     this.name = name;
   }
 
-  public IconDescriptor baseline() {
-    return new IconDescriptor("baseline_" + name);
+  public MaterialIcon baseline() {
+    return new MaterialIcon("baseline_" + name);
   }
 
-  public IconDescriptor outline() {
-    return new IconDescriptor("outline_" + name);
+  public MaterialIcon outline() {
+    return new MaterialIcon("outline_" + name);
   }
 
-  public IconDescriptor round() {
-    return new IconDescriptor("round_" + name);
+  public MaterialIcon round() {
+    return new MaterialIcon("round_" + name);
   }
 
-  public IconDescriptor sharp() {
-    return new IconDescriptor("sharp_" + name);
+  public MaterialIcon sharp() {
+    return new MaterialIcon("sharp_" + name);
   }
 
   @Override
