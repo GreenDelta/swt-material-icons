@@ -2019,7 +2019,7 @@ public enum MaterialIcon {
   }
 
   public IconDescriptor round() {
-    return new IconDescriptor("sharp_" + name);
+    return new IconDescriptor("round_" + name);
   }
 
   public IconDescriptor sharp() {
