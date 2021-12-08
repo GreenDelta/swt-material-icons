@@ -15,7 +15,7 @@ public class Example {
 
   public static void main(String[] args) {
 
-    boolean darkMode = false;
+    boolean darkMode = true;
 
     var display = new Display();
     var shell = new Shell();
@@ -33,7 +33,7 @@ public class Example {
     com.setBackground(background);
     com.setLayout(new GridLayout(60, true));
 
-    Function<MaterialIcon, IconDescriptor> variant = MaterialIcon::round;
+    Function<MaterialIcon, IconDescriptor> variant = MaterialIcon::outline;
     for (var icon : MaterialIcon.values()) {
       var img = variant.apply(icon).image(display, foreground);
       var label = new Label(com, SWT.NONE);
