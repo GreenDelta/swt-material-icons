@@ -26,7 +26,7 @@ public record MaterialIcon(String name) {
     }
   }
 
-  ImageData data(RGB color) {
+  public ImageData data(RGB color) {
     var raw = data();
     if (raw == null)
       return null;
