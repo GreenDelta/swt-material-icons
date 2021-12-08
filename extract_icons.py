@@ -24,8 +24,8 @@ def main():
         count = 0
         for path in paths:
             with z.open(path) as data:
-                image = Image.open(data)
-                image.resize((16, 16), Image.ANTIALIAS)
+                image = Image.open(data)\
+                    .resize((16, 16), Image.ANTIALIAS)
                 image.save(target_path(path))
             count += 1
             if count % 100 == 0:
@@ -38,7 +38,7 @@ def matches(file_name: str) -> bool:
         return False
     path_args = [
         '/png/',
-        '/materialicons/18dp/1x/'
+        '/materialiconsoutlined/18dp/1x/'
     ]
     for arg in path_args:
         if not arg in file_name:
@@ -49,7 +49,8 @@ def matches(file_name: str) -> bool:
 def target_path(file_name: str) -> str:
     base = file_name.split('/')[-1]\
         .removesuffix('_black_18dp.png')\
-        .removeprefix('baseline_')
+        .removeprefix('baseline_')\
+        .removeprefix('outline_')
     return f'{TARGET_DIR}/{base}.png'
 
 
